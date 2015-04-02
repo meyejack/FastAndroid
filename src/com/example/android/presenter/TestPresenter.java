@@ -15,18 +15,20 @@ public class TestPresenter {
 	}
 
 	/**
-	 * 测试方法
+	 * 测试方法,调用Model层进行数据逻辑处理,传入回调
 	 */
 	public void test() {
 		mUserModel.testModel(new TestListener() {
 
 			@Override
 			public void onSuccess(String result) {
+				// 根据不同结果对view进行通知
 				mUserView.testSuccess(result);
 			}
 
 			@Override
 			public void onFailure() {
+				// 根据不同结果对view进行通知
 				mUserView.testFailure();
 			}
 		});

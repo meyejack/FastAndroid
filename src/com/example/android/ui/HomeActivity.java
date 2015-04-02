@@ -41,7 +41,8 @@ public class HomeActivity extends BaseActivity implements IUserView {
 
 			@Override
 			public void onClick(View arg0) {
-				showToast("点击了左边");
+				//showToast("点击了左边");
+				// MVP模式开始
 				mTestPresenter.test();
 			}
 		});
@@ -61,11 +62,13 @@ public class HomeActivity extends BaseActivity implements IUserView {
 
 	@Override
 	public void testSuccess(String result) {
+		// view更新
 		tvContent.setText(result);
 	}
 
 	@Override
 	public void testFailure() {
+		// view更新
 		showToast("测试失败");
 	}
 }
