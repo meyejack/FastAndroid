@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    
+    <dimen name="base_title_bar_height">50dp</dimen>
+	<dimen name="base_title_bar_textsize">14sp</dimen>
+	<!-- 左侧按钮相关 -->
+	<dimen name="title_bar_left_margin">20dp</dimen>
+    <dimen name="title_bar_left_width">30dp</dimen>
+    <dimen name="title_bar_left_height">20dp</dimen>
+    <!-- 右侧按钮相关 -->
+    <dimen name="title_bar_right_margin">20dp</dimen>
+    <dimen name="title_bar_right_width">30dp</dimen>
+    <dimen name="title_bar_right_height">20dp</dimen>
+</resources>
