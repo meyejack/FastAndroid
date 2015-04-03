@@ -1,5 +1,6 @@
 # FastAndroid
 这是一个集成了多个开源项目后,进行整合形成的Android快速开发框架。
+关于项目的详细说明，请访问：http://blog.csdn.net/ht_android/article/details/44852407
 
 主要功能有：网络访问、上传下载、数据库操作、图片加载、异常捕获、View注解等等
 

@@ -7,6 +7,6 @@ package com.example.android.app;
  */
 public class Constants {
 
-	public static String DB_NAME = "myFramework";
+	public static final String DB_NAME = "myFramework";
 
 }
