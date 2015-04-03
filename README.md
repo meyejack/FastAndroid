@@ -1,4 +1,7 @@
 # FastAndroid
+
+# QQ交流群：310262562
+
 这是一个集成了多个开源项目后,进行整合形成的Android快速开发框架。
 关于项目的详细说明，请访问：http://blog.csdn.net/ht_android/article/details/44852407
 
