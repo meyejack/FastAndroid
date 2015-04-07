@@ -14,13 +14,13 @@ public class TestModelImpl implements ITestModel {
 	 */
 	@Override
 	public void testModel(final TestListener listener) {
-		NetCenter.getInstance().test("", "", new Listener<String>() {
+		NetCenter.getInstance().test(new Listener<String>() {
 
 			@Override
 			public void onResponse(String response) {
 				// TODO 处理数据逻辑
+				String result = "MVP模式测试成功";
 				// 回调可自定义,可传参数等返回给Presenter
-				String result = "成功";
 				listener.onSuccess(result);
 			}
 		}, new ErrorListener() {
@@ -32,5 +32,5 @@ public class TestModelImpl implements ITestModel {
 			}
 		});
 	}
-	
+
 }

@@ -14,11 +14,11 @@
 
 网络访问：Volley、Xutils网络模块(HttpUtils)
 
-数据库：GreenDao
+数据库：GreenDao(使用方法http://blog.csdn.net/ht_android/article/details/44782539)
 
 图片加载：Universal-image-loader
 
-View注解：Butterknife
+View注解：Butterknife(使用方法 http://blog.csdn.net/ht_android/article/details/44646977)
 
 Json解析：Gson
 
@@ -31,6 +31,5 @@ Json解析：Gson
 
 3.关于MVP模式在源码中有注释,不了解的话请跟着源码的运行流程看一遍源码就明白了
 
-关于作者Hunter：本项目的主旨只是为了给Android开发入门者提供一些开源项目的使用方法,指出一个大致的方向
-如果有什么建议,可以发邮件到 hunter-android@163.com 或 QQ 381959281联系作者
+关于作者Hunter：本项目的主旨是为Android开发新手提供一个良好的开发架构,可以发邮件到 hunter-android@163.com 或 QQ 381959281联系作者,欢迎反馈你对本项目的看法及建议
 

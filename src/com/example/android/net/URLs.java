@@ -5,13 +5,11 @@ package com.example.android.net;
  *
  */
 public class URLs {
-	public static final String HOST = "http://192.168.192.209/";
-	public static final String PROJECT_NAME = "project/";
-	public static final String API = "api/";
+	public static final String HOST = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json";
+	public static final String PROJECT_NAME = "";
+	public static final String API = "";
 	
-	public static final String API_USER_LOGIN = "user/signin";
-	
-	public static final String API_NEWS_LIST = "news/getlist";
+	public static final String API_TEST = "";
 	
 	public static String getURL(String uri){
 		return HOST + PROJECT_NAME + API + uri;

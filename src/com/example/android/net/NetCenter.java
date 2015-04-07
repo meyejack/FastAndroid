@@ -135,15 +135,16 @@ public class NetCenter {
 	 * @param listener
 	 * @param errorListener
 	 */
-	public void test(String user, String pwd, Listener<String> listener,
+	public void test(Listener<String> listener,
 			ErrorListener errorListener) {
-		String url = URLs.getURL(URLs.API_USER_LOGIN);
-		Map<String, String> params = getBaseParams();
-		params.put("user", user);
-		params.put("pwd", pwd);
+		String url = URLs.getURL(URLs.API_TEST);
 
 		// 发起post请求
-		//post(params, url, listener, errorListener);
+		// Map<String, String> params = getBaseParams();
+		// params.put("user", user);
+		// params.put("pwd", pwd);
+		// post(params, url, listener, errorListener);
+		
 		// 发起get请求
 		get(url, listener, errorListener);
 	}

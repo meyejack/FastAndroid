@@ -15,7 +15,7 @@ public class TestPresenter {
 	}
 
 	/**
-	 * 测试方法,调用Model层进行数据逻辑处理,传入回调
+	 * 测试方法,调用Model层进行数据逻辑处理,传入自定义回调回调
 	 */
 	public void test() {
 		mUserModel.testModel(new TestListener() {

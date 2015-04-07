@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.client.methods.HttpUriRequest;
-
 import android.app.Application;
 import android.content.Context;
 
@@ -17,8 +15,6 @@ import com.example.android.bean.net.response.User;
 import com.example.android.dao.MyCookieDao;
 import com.example.android.exception.CatchHandler;
 import com.example.android.utils.CommonUtils;
-import com.example.android.utils.LogUtils;
-import com.lidroid.xutils.HttpUtils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -214,7 +210,6 @@ public class MyApplication extends Application {
 			setUser(new User());
 		}
 	}
-	
 	
 	
 	/**

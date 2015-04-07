@@ -35,8 +35,7 @@ public class HomeActivity extends BaseActivity implements IUserView {
 	 */
 	private void initTitleBar() {
 		mTitleBar = getTitleBar();
-		mTitleBar.setTitleBar("注册", R.drawable.abc_ab_bottom_solid_dark_holo,
-				R.drawable.abc_ab_bottom_solid_light_holo);
+		mTitleBar.setTitleBar("MVP测试页面", R.drawable.abc_ab_bottom_solid_light_holo);
 		mTitleBar.setLeftListener(new OnClickListener() {
 
 			@Override

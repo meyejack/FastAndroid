@@ -3,12 +3,13 @@ package com.example.android.app;
 import java.util.Stack;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
+
 /**
  * 自定义Activity堆栈管理
+ * 
  * @author Ht
- *
+ * 
  */
 public class AppManager {
 	private static Stack<Activity> activityStack;
@@ -45,7 +46,7 @@ public class AppManager {
 		Activity activity = activityStack.lastElement();
 		return activity;
 	}
-	
+
 	/**
 	 * 移除当前Activity（堆栈中最后一个压入的）
 	 */
@@ -115,18 +116,10 @@ public class AppManager {
 	 *            是否开开启后台运行
 	 */
 	public void AppExit(Context context, Boolean isBackground) {
-		try {
-			finishAllActivity();
-			ActivityManager activityMgr = (ActivityManager) context
-					.getSystemService(Context.ACTIVITY_SERVICE);
-			activityMgr.restartPackage(context.getPackageName());
-		} catch (Exception e) {
-
-		} finally {
-			// 注意，如果您有后台程序运行，请不要支持此句子
-			if (!isBackground) {
-				System.exit(0);
-			}
+		finishAllActivity();
+		// 注意，如果您有后台程序运行，请不要支持此句子
+		if (!isBackground) {
+			System.exit(0);
 		}
 	}
 }
