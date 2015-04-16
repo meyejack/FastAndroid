@@ -30,7 +30,7 @@ import com.android.volley.NetworkResponse;
  */
 public class HttpHeaderParser {
 	
-	public static final String DEFAULT_CHARSET = "UTF-8";
+	public static final String DEFAULT_CHARSET = "utf-8";
 
     /**
      * Extracts a {@link Cache.Entry} from a {@link NetworkResponse}.

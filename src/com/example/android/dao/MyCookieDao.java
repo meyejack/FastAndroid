@@ -2,18 +2,13 @@ package com.example.android.dao;
 
 import java.util.List;
 
-import org.apache.http.client.methods.HttpUriRequest;
+import android.content.Context;
 
 import com.example.android.Cookie;
 import com.example.android.CookieDao;
 import com.example.android.DaoSession;
-import com.example.android.Note;
-import com.example.android.NoteDao;
 import com.example.android.app.MyApplication;
 import com.example.android.utils.CommonUtils;
-import com.example.android.utils.LogUtils;
-
-import android.content.Context;
 
 /**
  * 测试数据库操作类,用于操作sqlite

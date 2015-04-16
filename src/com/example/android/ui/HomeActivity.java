@@ -11,6 +11,12 @@ import com.example.android.presenter.TestPresenter;
 import com.example.android.ui.custom.HeaderLayout;
 import com.example.android.view.IUserView;
 
+/**
+ * 程序首页
+ * 
+ * @author user
+ * 
+ */
 public class HomeActivity extends BaseActivity implements IUserView {
 
 	private HeaderLayout mTitleBar;
@@ -35,12 +41,14 @@ public class HomeActivity extends BaseActivity implements IUserView {
 	 */
 	private void initTitleBar() {
 		mTitleBar = getTitleBar();
-		mTitleBar.setTitleBar("MVP测试页面", R.drawable.abc_ab_bottom_solid_light_holo);
+		mTitleBar.setTitleBar("MVP测试页面",
+				R.drawable.abc_ab_bottom_solid_light_holo,
+				R.drawable.abc_ab_bottom_solid_dark_holo);
 		mTitleBar.setLeftListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				//showToast("点击了左边");
+				// showToast("点击了左边");
 				// MVP模式开始
 				mTestPresenter.test();
 			}

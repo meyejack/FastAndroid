@@ -1,7 +1,9 @@
 package com.example.android.bean.net.response;
 
+import com.example.android.base.BaseRequest;
 
-public class User {
+
+public class User extends BaseRequest {
 	private String user;
 	private String pwd;
 
