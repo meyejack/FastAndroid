@@ -1,18 +1,15 @@
 package com.example.android.net;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
 
-import com.android.volley.Request.Method;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.Volley;
 import com.example.android.app.AppManager;
 import com.example.android.base.BaseRequest;
 import com.example.android.utils.NetUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 /**
  * 网络访问控制中心 用于统一管理网络访问接口及相关配置
@@ -21,115 +18,147 @@ import com.example.android.utils.NetUtils;
  * 
  */
 public class NetCenter {
-	public static final int GET = 1;
-	public static final int POST = 2;
-	private static NetCenter mNetCenter;
-	/** 请求队列管理池 */
-	private Map<Context, RequestQueue> mRequestMap;
 
-	private NetCenter() {
-		mRequestMap = new HashMap<Context, RequestQueue>();
-	}
+	private static final int GET = 1;
+	private static final int POST = 2;
+	private static final int PUT = 3;
 
-	public static NetCenter getInstance() {
-		if (mNetCenter == null) {
-			mNetCenter = new NetCenter();
-		}
+	// 连接超时时间
+	private static final int CONNECTTIMEOUT = 15 * 1000;
+	// 最大连接数
+	private static final int MaxConnections = 15;
+	// 失败重连次数
+	private static final int MaxRetries = 3;
+	// 失败重连间隔时间
+	private static final int RetriesTimeout = 5 * 1000;
+	// 响应超时时间
+	private static final int ResponseTimeout = 15 * 1000;
 
-		return mNetCenter;
+	/** 如需扩展更多功能,请浏览官方API自行封装：http://loopj.com/android-async-http/ */
+	private static AsyncHttpClient client = new AsyncHttpClient();
+
+	static {
+		// 设置连接超时时间
+		client.setConnectTimeout(CONNECTTIMEOUT);
+		// 设置最大连接数
+		client.setMaxConnections(MaxConnections);
+		// 设置重连次数以及间隔时间
+		client.setMaxRetriesAndTimeout(MaxRetries, RetriesTimeout);
+		// 设置响应超时时间
+		client.setResponseTimeout(ResponseTimeout);
 	}
 
 	/**
-	 * 根据Context创建一个请求队列,用于与Activity生命周期联动
+	 * 发起带参数的get请求
 	 * 
-	 * @param context
+	 * @param url
+	 *            请求路径
+	 * @param t
+	 *            继承自BaseRequest的请求参数实体类
+	 * @param responseHandler
+	 *            响应回调
 	 */
-	public RequestQueue init(Context context) {
-		RequestQueue mRequestQueue = Volley.newRequestQueue(context);
-		mRequestMap.put(context, mRequestQueue);
-		return mRequestQueue;
+	public static <T extends BaseRequest> void get(String url, T t,
+			AsyncHttpResponseHandler responseHandler) {
+
+		sendRequest(GET, url, t, responseHandler);
 	}
 
-	/** 清除当前Activity的请求队列 */
-	public void clearRequestQueue() {
-		Context context = AppManager.getAppManager().currentActivity();
-		RequestQueue mRequestQueue = mRequestMap.get(context);
-		if (mRequestQueue != null) {
-			mRequestQueue.cancelAll(context);
-			mRequestQueue = null;
-		}
+	/**
+	 * 发起不带参数get请求
+	 * 
+	 * @param url
+	 *            请求路径
+	 * @param responseHandler
+	 *            响应回调
+	 */
+	public static void get(String url, AsyncHttpResponseHandler responseHandler) {
+
+		get(url, null, responseHandler);
 	}
 
-	private void accessNetwork(int method, Map<String, String> params,
-			String url, Listener<String> listener, ErrorListener errorListener) {
+	/**
+	 * 发起带参数post请求
+	 * 
+	 * @param url
+	 *            请求路径
+	 * @param t
+	 *            继承自BaseRequest的请求参数实体类
+	 * @param responseHandler
+	 *            响应回调
+	 */
+	public static <T extends BaseRequest> void post(String url, T t,
+			AsyncHttpResponseHandler responseHandler) {
+
+		sendRequest(POST, url, t, responseHandler);
+	}
+
+	/**
+	 * 发起不带参数post请求
+	 * 
+	 * @param url
+	 *            请求路径
+	 * @param responseHandler
+	 *            响应回调
+	 */
+	public static void post(String url, AsyncHttpResponseHandler responseHandler) {
+
+		post(url, null, responseHandler);
+	}
+
+	/**
+	 * 发起网络请求
+	 * 
+	 * @param type
+	 *            请求类型
+	 * @param url
+	 *            请求路径
+	 * @param params
+	 *            请求参数
+	 * @param responseHandler
+	 *            响应回调
+	 */
+	private static <T extends BaseRequest> void sendRequest(int type,
+			String url, T t, AsyncHttpResponseHandler responseHandler) {
+		// 将传入的请求实体类映射成Map
+		Map<String, String> params = NetUtils.getParams(t);
+		// 将Map转换成请求参数
+		RequestParams requestParams = new RequestParams(params);
+
+		// 获取当前页面的Context
 		Context context = AppManager.getAppManager().currentActivity();
+
 		// 判断网络是否可用
-		NetUtils netUtils = new NetUtils(context);
-		if (!netUtils.isNetworkConnected()) {
+		if (!NetUtils.isNetworkConnected(context)) {
 			return;
 		}
 
-		CustomStringRequest mRequest = new CustomStringRequest(method, url,
-				listener, errorListener);
-
-		if (params != null && params.size() > 0) {
-			mRequest.setParams(params);
-		}
-
-		RequestQueue mRequestQueue = mRequestMap.get(context);
-		if (mRequestQueue != null) {
-			mRequestQueue.add(mRequest);
-		}
-	}
-
-	/**
-	 * 发起带参数的请求
-	 * 
-	 * @param method
-	 *            请求方式 POST/GET
-	 * @param t
-	 *            请求参数实体类
-	 * @param url
-	 *            请求路径
-	 * @param listener
-	 *            成功回调
-	 * @param errorListener
-	 *            失败回调
-	 */
-	public <T extends BaseRequest> void send(int method, T t, String url,
-			Listener<String> listener, ErrorListener errorListener) {
-		Map<String, String> postParams = new HashMap<String, String>();
-
-		switch (method) {
-		case Method.GET:
-			String getParams = NetUtils.getGetParams(t);
-			url += getParams;
+		// 根据传入类型调用不同请求方法,可自行扩展
+		// 传入Context以便与生命周期联动
+		switch (type) {
+		case GET:
+			// 发起get请求,获取请求处理器
+			client.get(context, url, requestParams, responseHandler);
 			break;
-		case Method.POST:
-			postParams = NetUtils.getPostParams(t);
+		case POST:
+			// 发起post请求,获取请求处理器
+			client.post(context, url, requestParams, responseHandler);
 			break;
+		case PUT:
+			// 发起post请求,获取请求处理器
+			// .....
+			client.put(context, url, requestParams, responseHandler);
 		default:
+			// 默认发起get请求
+			client.get(context, url, requestParams, responseHandler);
 			break;
 		}
-
-		accessNetwork(method, postParams, url, listener, errorListener);
 	}
 
-	/**
-	 * 发起不带参数的请求
-	 * 
-	 * @param method
-	 *            请求方式 POST/GET
-	 * @param url
-	 *            请求路径
-	 * @param listener
-	 *            成功回调
-	 * @param errorListener
-	 *            失败回调
-	 */
-	public <T extends BaseRequest> void send(int method, String url,
-			Listener<String> listener, ErrorListener errorListener) {
-
-		accessNetwork(method, null, url, listener, errorListener);
+	/** 取消当前Context的请求队列 */
+	public static void clearRequestQueue() {
+		Context context = AppManager.getAppManager().currentActivity();
+		// 销毁指定Context的请求, 第二个参数true代表强制结束
+		client.cancelRequests(context, true);
 	}
 }

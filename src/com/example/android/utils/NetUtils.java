@@ -22,23 +22,18 @@ import com.example.android.base.BaseRequest;
  * 
  */
 public class NetUtils {
-	private Context context;
-
-	public NetUtils(Context context) {
-		this.context = context;
-	}
 
 	/**
 	 * 判断当前网络是否可用
 	 * 
 	 * @return
 	 */
-	public boolean isNetworkConnected() {
+	public static boolean isNetworkConnected(Context context) {
 		if (context != null) {
 			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
 			if (mConnectivityManager == null) {
-				showNetErrorDialog();
+				showNetErrorDialog(context);
 				return false;
 			}
 			NetworkInfo[] infos = mConnectivityManager.getAllNetworkInfo();
@@ -51,11 +46,11 @@ public class NetUtils {
 			}
 		}
 
-		showNetErrorDialog();
+		showNetErrorDialog(context);
 		return false;
 	}
 
-	private void showNetErrorDialog() {
+	private static void showNetErrorDialog(Context context) {
 		try {
 			BaseActivity activity = (BaseActivity) AppManager.getAppManager()
 					.currentActivity();
@@ -92,7 +87,7 @@ public class NetUtils {
 	 * 
 	 * @return
 	 */
-	public boolean isWifiConnected() {
+	public static boolean isWifiConnected(Context context) {
 		if (context != null) {
 			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -110,7 +105,7 @@ public class NetUtils {
 	 * 
 	 * @return
 	 */
-	public boolean isMobileConnected() {
+	public boolean isMobileConnected(Context context) {
 		if (context != null) {
 			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -128,14 +123,14 @@ public class NetUtils {
 	 * 
 	 * @return
 	 */
-	public int getConnectedType() {
+	public int getConnectedType(Context context) {
 		if (context != null) {
 			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo mNetworkInfo = mConnectivityManager
 					.getActiveNetworkInfo();
 			if (mNetworkInfo != null && mNetworkInfo.isAvailable()) {
-				return mNetworkInfo.getType() == mConnectivityManager.TYPE_WIFI ? 1
+				return mNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI ? 1
 						: 2;
 			}
 		}
@@ -143,12 +138,12 @@ public class NetUtils {
 	}
 
 	/**
-	 * 获取post请求参数
+	 * 获取请求参数
 	 * 
 	 * @param t
 	 * @return
 	 */
-	public static <T extends BaseRequest> Map<String, String> getPostParams(T t) {
+	public static <T extends BaseRequest> Map<String, String> getParams(T t) {
 		Class<? extends BaseRequest> clazz = t.getClass();
 		Class<? extends Object> superclass = clazz.getSuperclass();
 
@@ -166,9 +161,9 @@ public class NetUtils {
 				params.put(field.getName(), String.valueOf(field.get(t)));
 			}
 
-			for (Field field : superFields) {
-				field.setAccessible(true);
-				params.put(field.getName(), String.valueOf(field.get(t)));
+			for (Field superField : superFields) {
+				superField.setAccessible(true);
+				params.put(superField.getName(), String.valueOf(superField.get(t)));
 			}
 
 		} catch (IllegalAccessException e) {
@@ -182,52 +177,4 @@ public class NetUtils {
 		return params;
 	}
 
-	/**
-	 * 获取get请求参数
-	 * 
-	 * @param t
-	 * @return
-	 */
-	public static <T extends BaseRequest> String getGetParams(T t) {
-		Class<? extends BaseRequest> clazz = t.getClass();
-		Class<? extends Object> superclass = clazz.getSuperclass();
-
-		Field[] fields = clazz.getDeclaredFields();
-		Field[] superFields = superclass.getDeclaredFields();
-
-		if (fields == null || fields.length == 0) {
-			return "";
-		}
-
-		StringBuilder builder = new StringBuilder();
-		builder.append("?");
-		try {
-			for (int i = 0; i < fields.length; i++) {
-				Field field = fields[i];
-				field.setAccessible(true);
-				builder.append(field.getName() + "="
-						+ String.valueOf(field.get(t)));
-
-				if (i != fields.length - 1) {
-					builder.append("&");
-				}
-			}
-
-			for (int i = 0; i < superFields.length; i++) {
-				Field field = superFields[i];
-				field.setAccessible(true);
-				builder.append("&");
-				builder.append(field.getName() + "="
-						+ String.valueOf(field.get(t)));
-			}
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return builder.toString();
-	}
 }

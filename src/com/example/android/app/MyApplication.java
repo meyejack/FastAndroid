@@ -16,7 +16,7 @@ import com.example.android.dao.MyCookieDao;
 import com.example.android.exception.CatchHandler;
 import com.example.android.utils.CommonUtils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
-import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -42,7 +42,7 @@ public class MyApplication extends Application {
 		super.onCreate();
 		mInstance = this;
 
-		// initCatchHandler();
+		initCatchHandler();
 		initImageLoader();
 		checkRememberPassword();
 	}
@@ -86,8 +86,8 @@ public class MyApplication extends Application {
 				// default
 				.diskCache(new UnlimitedDiscCache(cacheDir))
 				// default
-				.diskCacheSize(50 * 1024 * 1024).diskCacheFileCount(100)
-				.diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
+				.diskCacheSize(20 * 1024 * 1024).diskCacheFileCount(100)
+				.diskCacheFileNameGenerator(new Md5FileNameGenerator()) // default
 				.defaultDisplayImageOptions(defaultOptions) // default
 				.writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);

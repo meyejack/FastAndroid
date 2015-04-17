@@ -41,16 +41,15 @@ public abstract class BaseActivity extends Activity implements IBaseView {
 		getTitleBar();
 		initListener();
 		initPresenter();
-		// 根据Context初始化网络请求队列
-		NetCenter.getInstance().init(this);
 		// 将该Activity加入堆栈
 		AppManager.getAppManager().addActivity(this);
 	}
 
 	@Override
 	protected void onDestroy() {
+		// TODO 该方法运行在子线程,可能导致Activity回收时Context被持有,导致内存泄露
 		// 清除网络请求队列
-		NetCenter.getInstance().clearRequestQueue();
+		NetCenter.clearRequestQueue();
 		// 将该Activity从堆栈移除
 		AppManager.getAppManager().removeActivity();
 		super.onDestroy();
