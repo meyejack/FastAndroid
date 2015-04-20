@@ -120,10 +120,14 @@ public class NetCenter {
 	 */
 	private static <T extends BaseRequest> void sendRequest(int type,
 			String url, T t, AsyncHttpResponseHandler responseHandler) {
+		RequestParams requestParams = null;
+
 		// 将传入的请求实体类映射成Map
-		Map<String, String> params = NetUtils.getParams(t);
-		// 将Map转换成请求参数
-		RequestParams requestParams = new RequestParams(params);
+		if (t != null) {
+			Map<String, String> params = NetUtils.getParams(t);
+			// 将Map转换成请求参数
+			requestParams = new RequestParams(params);
+		}
 
 		// 获取当前页面的Context
 		Context context = AppManager.getAppManager().currentActivity();

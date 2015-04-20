@@ -2,10 +2,12 @@ package com.example.android.base;
 
 /**
  * 公共View接口
+ * 
  * @author Ht
  * 
  */
 public interface IBaseView {
+
 	/**
 	 * 显示进度条
 	 * 

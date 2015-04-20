@@ -8,7 +8,6 @@ import com.example.android.Cookie;
 import com.example.android.CookieDao;
 import com.example.android.DaoSession;
 import com.example.android.app.MyApplication;
-import com.example.android.utils.CommonUtils;
 
 /**
  * 测试数据库操作类,用于操作sqlite
@@ -123,33 +122,6 @@ public class MyCookieDao {
 	 */
 	public List<Cookie> loadAllCookie() {
 		return cookieDao.loadAll();
-	}
-
-	/**
-	 * 获取当前Cookie
-	 * 
-	 * @return
-	 */
-	public String getCookiesHeader(String url) {
-		List<Cookie> cookies = loadAllCookie();
-		StringBuilder cookieStr = new StringBuilder();
-		for (int i = 0; i < cookies.size(); i++) {
-			// 验证Cookie的有效性
-			if (CommonUtils.checkCookie(url, cookies.get(i))) {
-				// 验证通过,拼接Cookie
-				if (i == cookies.size() - 1) {
-					cookieStr.append(cookies.get(i).getKey() + "="
-							+ cookies.get(i).getValue());
-				} else {
-					cookieStr.append(cookies.get(i).getKey() + "="
-							+ cookies.get(i).getValue() + ";");
-				}
-			} else {
-				// 验证不通过,删除无效Cookie
-				deleteCookie(cookies.get(i));
-			}
-		}
-		return cookieStr.toString();
 	}
 
 	/**

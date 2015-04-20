@@ -5,11 +5,12 @@ package com.example.android.net;
  *
  */
 public class URLs {
-	public static final String HOST = "http://int.dpool.sina.com.cn/iplookup/iplookup.php";
+	public static final String HOST = "http://www.ccad.gov.cn/";
 	public static final String PROJECT_NAME = "";
-	public static final String API = "";
+	public static final String API = "api/";
 	
-	public static final String API_TEST = "";
+	// 新闻列表
+	public static final String API_NEWS_LIST = "27.json";
 	
 	/**
 	 * 拼接请求路径

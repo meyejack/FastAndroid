@@ -35,14 +35,13 @@ public abstract class BaseActivity extends Activity implements IBaseView {
 		// 隐藏标题栏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		initContentView();
-		// 初始化View注入
-		ButterKnife.inject(this);
-		initView();
-		getTitleBar();
-		initListener();
-		initPresenter();
 		// 将该Activity加入堆栈
 		AppManager.getAppManager().addActivity(this);
+		// 初始化View注入
+		ButterKnife.inject(this);
+		initPresenter();
+		initView();
+		initListener();
 	}
 
 	@Override

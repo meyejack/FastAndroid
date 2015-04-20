@@ -1,18 +1,18 @@
 package com.example.android.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 
-import com.example.android.Cookie;
 import com.example.android.R;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
@@ -24,6 +24,9 @@ import com.google.gson.JsonParser;
  * 
  */
 public class CommonUtils {
+
+	private static DateFormat dateTime = new SimpleDateFormat(
+			"yyyy-MM-dd");
 
 	/**
 	 * 隐藏软键盘
@@ -92,27 +95,12 @@ public class CommonUtils {
 	}
 
 	/**
-	 * 验证cookie的有效性
+	 * 格式化日期
 	 * 
-	 * @param url
-	 * @param domain
+	 * @param date
 	 * @return
 	 */
-	public static boolean checkCookie(String url, Cookie cookie) {
-		String rex = "\\*" + cookie.getDomain() + "\\*";
-		// 验证domain的有效性
-		if (!TextUtils.isEmpty(cookie.getDomain())) {
-			if (!url.matches(rex)) {
-				return false;
-			}
-		}
-
-		// 验证生命周期的有效性
-		Date expires = cookie.getExpires();
-		if (expires == null) {
-			return true;
-		}
-
-		return expires.after(new Date());
+	public static String formatDate(Date date) {
+		return dateTime.format(date);
 	}
 }
