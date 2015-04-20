@@ -12,7 +12,7 @@
 
 用到的开源项目有：
 
-网络访问：Volley、Xutils网络模块(HttpUtils)
+网络访问：android-async-http
 
 数据库：GreenDao(使用方法http://blog.csdn.net/ht_android/article/details/44782539)
 
@@ -25,11 +25,9 @@ Json解析：Gson
 
 项目说明：
 
-1.本项目在Volley源码中添加了关于Cookie的管理,Xutils-HttpUtils暂不支持,如有需求请自行添加
+1.在项目中自定义了Header视图,可自定义左右按钮,点击事件以及标题
 
-2.在项目中自定义了Header视图,可自定义左右按钮,点击事件以及标题
-
-3.关于MVP模式在源码中有注释,不了解的话请跟着源码的运行流程看一遍源码就明白了
+2.关于MVP模式在源码中有注释,不了解的话请跟着源码的运行流程看一遍源码就明白了
 
 关于作者Hunter：本项目的主旨是为Android开发新手提供一个良好的开发架构,可以发邮件到 hunter-android@163.com 或 QQ 381959281联系作者,欢迎反馈你对本项目的看法及建议
 
