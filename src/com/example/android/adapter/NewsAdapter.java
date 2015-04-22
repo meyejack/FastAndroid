@@ -74,7 +74,7 @@ public class NewsAdapter extends BaseAdapter {
 		return 0;
 	}
 
-	class ViewHolder {
+	static class ViewHolder {
 		@InjectView(R.id.tv_title)
 		TextView tvTitle;
 		@InjectView(R.id.tv_writer)

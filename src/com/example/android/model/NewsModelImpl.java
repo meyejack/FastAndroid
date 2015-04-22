@@ -41,6 +41,7 @@ public class NewsModelImpl implements NewsModel {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					String responseString) {
+
 				Response response = null;
 				List<News> datas = null;
 
@@ -69,6 +70,7 @@ public class NewsModelImpl implements NewsModel {
 					// TODO 缓存数据
 				}
 			}
+
 		});
 	}
 
