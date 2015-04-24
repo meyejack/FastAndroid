@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="E:\as_workspace\myProject\assets"><file name="user_result.json" path="E:\as_workspace\myProject\assets\user_result.json"/></source></dataSet><dataSet config="debug"><source path="E:\as_workspace\myProject\build-types\debug\assets"/></dataSet></merger>

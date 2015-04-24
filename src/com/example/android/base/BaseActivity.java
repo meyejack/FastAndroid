@@ -50,7 +50,7 @@ public abstract class BaseActivity extends Activity implements IBaseView {
 		// 清除网络请求队列
 		NetCenter.clearRequestQueue();
 		// 将该Activity从堆栈移除
-		AppManager.getAppManager().removeActivity();
+		AppManager.getAppManager().removeActivity(this);
 		super.onDestroy();
 	}
 
