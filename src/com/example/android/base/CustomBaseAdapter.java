@@ -42,7 +42,7 @@ public abstract class CustomBaseAdapter<T> extends BaseAdapter {
 	 * @return
 	 */
 	public View getItemView(int resource, ViewGroup parent) {
-		return mInflater.inflate(R.layout.item_news, parent, false);
+		return mInflater.inflate(resource, parent, false);
 	}
 	
 	/**
